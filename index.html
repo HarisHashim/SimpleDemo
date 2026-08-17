@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleDemo - Spring Boot + Angular</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+          colors: {
+            spring: { 400: '#7ecc49', 500: '#6DB33F', 600: '#5ba032' },
+            angular: { 400: '#ff3358', 500: '#DD0031', 600: '#b80028' },
+            brand: { dark: '#0B0F17', card: '#111827', accent: '#3B82F6' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #0B0F17; color: #E5E7EB; font-family: 'Inter', sans-serif; }
+    .gradient-text { background: linear-gradient(135deg, #6DB33F 0%, #3B82F6 50%, #DD0031 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card:hover { border-color: rgba(255, 255, 255, 0.18); }
+    .tab-btn.active { background-color: #1F2937; color: #F9FAFB; border-bottom: 2px solid #3B82F6; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 glass-card border-b border-gray-800/80 bg-brand-dark/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-spring-500 via-blue-500 to-angular-500 p-[2px] flex items-center justify-center">
+          <div class="w-full h-full bg-brand-dark rounded-[10px] flex items-center justify-center">
+            <i data-lucide="layers" class="w-5 h-5 text-spring-400"></i>
+          </div>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white">SimpleDemo</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#overview" class="hover:text-white transition-colors">Overview</a>
+        <a href="#demo" class="hover:text-white transition-colors">Live Demo</a>
+        <a href="#architecture" class="hover:text-white transition-colors">Architecture</a>
+        <a href="#tech-stack" class="hover:text-white transition-colors">Tech Stack</a>
+        <a href="#quickstart" class="hover:text-white transition-colors">Quickstart</a>
+      </nav>
+      <a href="https://github.com/HarisHashim/SimpleDemo" target="_blank" rel="noopener noreferrer" 
+         class="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-gray-800 text-gray-200 hover:bg-gray-700 hover:text-white border border-gray-700">
+        <i data-lucide="github" class="w-4 h-4"></i>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <!-- Hero Section -->
+    <section id="overview" class="relative pt-20 pb-16 md:pt-28 md:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-800/70 border border-gray-700/80 mb-6">
+        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-xs font-semibold tracking-wide text-gray-300 uppercase">Spring Boot + Angular</span>
+      </div>
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        Seamless Power of <br class="hidden sm:inline">
+        <span class="gradient-text">Spring Boot & Angular</span>
+      </h1>
+      <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-10 leading-relaxed">
+        A clean reference architecture showcasing a Java Spring Boot RESTful API connected to a standalone, reactive Angular frontend.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#demo" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-spring-500 to-emerald-600 hover:from-spring-600 text-white font-semibold text-base shadow-lg shadow-spring-500/20 flex items-center justify-center gap-2">
+          <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+          <span>Launch Live Simulator</span>
+        </a>
+        <a href="#quickstart" class="w-full sm:w-auto px-7 py-3.5 rounded-xl glass-card hover:bg-gray-800 text-gray-200 font-semibold text-base border border-gray-700 flex items-center justify-center gap-2">
+          <i data-lucide="terminal" class="w-5 h-5 text-gray-400"></i>
+          <span>Quickstart Guide</span>
+        </a>
+      </div>
+    </section>
+    <!-- Interactive Live Simulator -->
+    <section id="demo" class="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 flex items-center justify-center gap-2">
+          <i data-lucide="activity" class="w-6 h-6 text-spring-400"></i>
+          Interactive Client-Server Simulator
+        </h2>
+        <p class="text-gray-400 text-sm max-w-xl mx-auto">
+          Test the simulated round-trip request between Angular's <code class="text-blue-400 bg-gray-900 px-1.5 py-0.5 rounded font-mono text-xs">ApiService</code> and Spring Boot's <code class="text-spring-400 bg-gray-900 px-1.5 py-0.5 rounded font-mono text-xs">/hello</code> REST Controller.
+        </p>
+      </div>
+
+      <div class="rounded-2xl glass-card overflow-hidden border border-gray-800 shadow-2xl">
+        <div class="bg-gray-900/90 px-4 py-3 border-b border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+          </div>
+          <div class="flex items-center gap-2 px-3 py-1 rounded-md bg-gray-950 text-xs text-gray-400 font-mono border border-gray-800">
+            <i data-lucide="lock" class="w-3 h-3 text-emerald-400"></i>
+            <span>http://localhost:4200 (Angular App)</span>
+          </div>
+          <div class="text-xs text-gray-500 font-mono">Simulator Ready</div>
+        </div>
+
+        <div class="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-5 flex flex-col justify-between space-y-6 bg-gray-900/50 p-6 rounded-xl border border-gray-800/80">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-semibold uppercase tracking-wider text-angular-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-angular-500"></span> Angular Client
+                </span>
+                <span class="text-xs font-mono text-gray-500">App Component</span>
+              </div>
+              <h3 class="text-lg font-semibold text-white mb-2">Trigger Backend Request</h3>
+              <p class="text-xs text-gray-400 mb-6 leading-relaxed">
+                Executes <code class="text-blue-300 font-mono bg-gray-950 px-1.5 py-0.5 rounded">apiService.getHelloMessage()</code> to fetch greeting data via HTTP.
+              </p>
+            </div>
+
+            <div class="space-y-3">
+              <button id="sendRequestBtn" onclick="runSimulation()" class="w-full py-3 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span id="btnText">Send GET /hello</span>
+              </button>
+              <div class="flex items-center justify-between text-xs text-gray-500 pt-2">
+                <span>Simulated Latency:</span>
+                <span class="font-mono text-gray-300">~180ms</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 flex flex-col space-y-4">
+            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800/80 font-mono text-xs">
+              <div class="flex items-center justify-between text-gray-400 mb-2 pb-2 border-b border-gray-800">
+                <span>TARGET ENDPOINT</span>
+                <span class="text-emerald-400 font-bold">GET http://localhost:8080/hello</span>
+              </div>
+              <div class="flex items-center justify-between text-gray-400">
+                <span>STATUS CODE</span>
+                <span id="simStatus" class="text-gray-500">200 OK (Idle)</span>
+              </div>
+            </div>
+
+            <div class="flex-grow bg-gray-950 p-5 rounded-xl border border-gray-800/80 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs text-gray-400 mb-3">
+                  <span class="font-semibold text-spring-400 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-spring-500"></span> Spring Boot Response:
+                  </span>
+                  <span id="resTime" class="text-gray-500 font-mono text-[11px]">0ms</span>
+                </div>
+                <div id="responseBox" class="bg-gray-900 p-4 rounded-lg text-sm font-mono text-gray-300 border border-gray-800 min-h-[70px] flex items-center">
+                  "Hello from Spring Boot!"
+                </div>
+              </div>
+              <div class="mt-4 pt-3 border-t border-gray-800/50 flex items-center justify-between text-xs text-gray-500">
+                <span>Service: <span class="text-gray-400">HelloService.java</span></span>
+                <span>Repo: <span class="text-gray-400">MessageRepository.java</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Architecture Section -->
+    <section id="architecture" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">3-Tier Full-Stack Architecture</h2>
+        <p class="text-gray-400 text-sm max-w-2xl mx-auto">
+          Clean separation of concerns ensuring testability, maintainability, and clean reactive workflows.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-angular-500/10 border border-angular-500/30 flex items-center justify-center mb-4 text-angular-400">
+            <i data-lucide="monitor" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs font-mono font-semibold text-angular-400 mb-1">FRONTEND LAYER</div>
+          <h3 class="text-base font-bold text-white mb-2">Standalone Angular UI</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Modern Angular component using signals (<code class="text-xs text-gray-300 font-mono">title = signal('frontend')</code>) and clean lifecycle management.
+          </p>
+          <div class="mt-4 text-xs font-mono text-gray-500">frontend/src/app/app.ts</div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mb-4 text-blue-400">
+            <i data-lucide="network" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs font-mono font-semibold text-blue-400 mb-1">CLIENT TRANSPORT</div>
+          <h3 class="text-base font-bold text-white mb-2">RxJS ApiService</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Encapsulates asynchronous HTTP calls via Angular's <code class="text-xs text-gray-300 font-mono">HttpClient</code> returning typed Observables.
+          </p>
+          <div class="mt-4 text-xs font-mono text-gray-500">frontend/src/app/api.service.ts</div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center mb-4 text-purple-400">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs font-mono font-semibold text-purple-400 mb-1">SECURITY & NETWORK</div>
+          <h3 class="text-base font-bold text-white mb-2">WebMvc CORS Filter</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Configures cross-origin resource sharing via <code class="text-xs text-gray-300 font-mono">WebMvcConfigurer</code> allowing seamless requests from port 4200.
+          </p>
+          <div class="mt-4 text-xs font-mono text-gray-500">backend/.../config/WebConfig.java</div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-spring-500/10 border border-spring-500/30 flex items-center justify-center mb-4 text-spring-400">
+            <i data-lucide="server" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs font-mono font-semibold text-spring-400 mb-1">REST API CONTROLLER</div>
+          <h3 class="text-base font-bold text-white mb-2">HelloController</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Handles incoming <code class="text-xs text-gray-300 font-mono">@GetMapping("/hello")</code> HTTP requests with Constructor-based dependency injection.
+          </p>
+          <div class="mt-4 text-xs font-mono text-gray-500">backend/.../controller/HelloController.java</div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-4 text-amber-400">
+            <i data-lucide="cpu" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs font-mono font-semibold text-amber-400 mb-1">SERVICE LAYER</div>
+          <h3 class="text-base font-bold text-white mb-2">HelloService</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Houses domain business logic and delegates greeting data retrieval cleanly from the repository abstraction.
+          </p>
+          <div class="mt-4 text-xs font-mono text-gray-500">backend/.../service/HelloService.java</div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-4 text-cyan-400">
+            <i data-lucide="database" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs font-mono font-semibold text-cyan-400 mb-1">PERSISTENCE / DATA</div>
+          <h3 class="text-base font-bold text-white mb-2">MessageRepository</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Encapsulates data access with <code class="text-xs text-gray-300 font-mono">@Repository</code> annotation, easily extensible to Spring Data JPA or MongoDB.
+          </p>
+          <div class="mt-4 text-xs font-mono text-gray-500">backend/.../repository/MessageRepository.java</div>
+        </div>
+      </div>
+    </section>
+    <!-- Tech Stack Highlights -->
+    <section id="tech-stack" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-800/60">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">Core Technology Stack</h2>
+        <p class="text-gray-400 text-sm max-w-2xl mx-auto">
+          Built with standard enterprise frameworks and reactive developer ergonomics.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Spring Boot Card -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl border-l-4 border-l-spring-500">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-spring-500/20 flex items-center justify-center text-spring-400 font-bold text-sm">
+              SB
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white">Spring Boot Backend</h3>
+              <span class="text-xs text-gray-400">Java 17/21 • Spring Web • Maven</span>
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-gray-300">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-spring-400 shrink-0"></i>
+              <span>Spring MVC REST Controller (<code class="text-xs font-mono bg-gray-900 px-1 py-0.5 rounded">@RestController</code>)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-spring-400 shrink-0"></i>
+              <span>Spring IoC & Dependency Injection (<code class="text-xs font-mono bg-gray-900 px-1 py-0.5 rounded">@Autowired</code>)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-spring-400 shrink-0"></i>
+              <span>Global CORS Configuration (<code class="text-xs font-mono bg-gray-900 px-1 py-0.5 rounded">WebMvcConfigurer</code>)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-spring-400 shrink-0"></i>
+              <span>Maven build tool configuration (<code class="text-xs font-mono bg-gray-900 px-1 py-0.5 rounded">pom.xml</code>)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Angular Card -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl border-l-4 border-l-angular-500">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-angular-500/20 flex items-center justify-center text-angular-400 font-bold text-sm">
+              NG
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white">Angular Frontend</h3>
+              <span class="text-xs text-gray-400">TypeScript • Standalone • RxJS</span>
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-gray-300">
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-angular-400 shrink-0"></i>
+              <span>Modern standalone architecture (<code class="text-xs font-mono bg-gray-900 px-1 py-0.5 rounded">standalone: true</code>)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-angular-400 shrink-0"></i>
+              <span>Angular Signals for reactive component state (<code class="text-xs font-mono bg-gray-900 px-1 py-0.5 rounded">signal()</code>)</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-angular-400 shrink-0"></i>
+              <span>HttpClient with Observable pattern for API consumption</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-angular-400 shrink-0"></i>
+              <span>Vite-powered ultra-fast dev server and bundler</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Quickstart Section -->
+    <section id="quickstart" class="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 flex items-center justify-center gap-2">
+          <i data-lucide="terminal" class="w-6 h-6 text-blue-400"></i>
+          Quickstart & Local Execution
+        </h2>
+        <p class="text-gray-400 text-sm max-w-xl mx-auto">
+          Get the backend and frontend up and running locally in under 2 minutes.
+        </p>
+      </div>
+
+      <div class="glass-card rounded-2xl overflow-hidden border border-gray-800">
+        <div class="flex items-center border-b border-gray-800 bg-gray-950/70 px-4">
+          <button onclick="switchTab('backend')" id="tab-btn-backend" class="tab-btn active px-4 py-3 text-xs sm:text-sm font-medium transition-colors flex items-center gap-2">
+            <i data-lucide="server" class="w-4 h-4 text-spring-400"></i>
+            <span>1. Backend (Spring Boot)</span>
+          </button>
+          <button onclick="switchTab('frontend')" id="tab-btn-frontend" class="tab-btn px-4 py-3 text-xs sm:text-sm font-medium text-gray-400 transition-colors flex items-center gap-2">
+            <i data-lucide="layout" class="w-4 h-4 text-angular-400"></i>
+            <span>2. Frontend (Angular)</span>
+          </button>
+          <button onclick="switchTab('curl')" id="tab-btn-curl" class="tab-btn px-4 py-3 text-xs sm:text-sm font-medium text-gray-400 transition-colors flex items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4 text-blue-400"></i>
+            <span>3. Verify API</span>
+          </button>
+        </div>
+
+        <div id="tab-backend" class="p-6 font-mono text-xs sm:text-sm bg-gray-950 text-gray-200">
+          <div class="text-gray-500 mb-2"># Navigate to backend and run Spring Boot</div>
+          <div class="text-emerald-400">cd backend</div>
+          <div class="text-white mt-1">./mvnw spring-boot:run</div>
+          <div class="text-gray-500 mt-3"># Server running at: <span class="text-blue-400">http://localhost:8080</span></div>
+        </div>
+
+        <div id="tab-frontend" class="p-6 font-mono text-xs sm:text-sm bg-gray-950 text-gray-200 hidden">
+          <div class="text-gray-500 mb-2"># Navigate to frontend, install & run</div>
+          <div class="text-emerald-400">cd frontend</div>
+          <div class="text-white mt-1">npm install && npm start</div>
+          <div class="text-gray-500 mt-3"># App running at: <span class="text-angular-400">http://localhost:4200</span></div>
+        </div>
+
+        <div id="tab-curl" class="p-6 font-mono text-xs sm:text-sm bg-gray-950 text-gray-200 hidden">
+          <div class="text-gray-500 mb-2"># Test REST endpoint via curl</div>
+          <div class="text-white">curl http://localhost:8080/hello</div>
+          <div class="text-gray-500 mt-3"># Response:</div>
+          <div class="text-spring-400 font-bold mt-1">Hello from Spring Boot!</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-800/80 bg-brand-dark py-10 text-xs sm:text-sm text-gray-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <i data-lucide="layers" class="w-4 h-4 text-spring-400"></i>
+        <span class="text-gray-300 font-semibold">SimpleDemo</span>
+        <span>•</span>
+        <span>Spring Boot & Angular Architecture</span>
+      </div>
+      <a href="https://github.com/HarisHashim/SimpleDemo" target="_blank" rel="noopener noreferrer" class="hover:text-gray-300 transition-colors flex items-center gap-1.5">
+        <i data-lucide="github" class="w-4 h-4"></i>
+        <span>GitHub Repository</span>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    function switchTab(tab) {
+      ['backend', 'frontend', 'curl'].forEach(t => {
+        const content = document.getElementById(`tab-${t}`);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (t === tab) {
+          content.classList.remove('hidden');
+          btn.classList.add('active');
+          btn.classList.remove('text-gray-400');
+        } else {
+          content.classList.add('hidden');
+          btn.classList.remove('active');
+          btn.classList.add('text-gray-400');
+        }
+      });
+    }
+
+    function runSimulation() {
+      const btn = document.getElementById('sendRequestBtn');
+      const btnText = document.getElementById('btnText');
+      const responseBox = document.getElementById('responseBox');
+      const simStatus = document.getElementById('simStatus');
+      const resTime = document.getElementById('resTime');
+
+      btn.disabled = true;
+      btn.classList.add('opacity-75');
+      btnText.textContent = 'Fetching...';
+      simStatus.textContent = '200 Pending...';
+      simStatus.className = 'text-yellow-400 animate-pulse';
+      responseBox.textContent = 'Loading message from backend...';
+      responseBox.className = 'bg-gray-900 p-4 rounded-lg text-sm font-mono text-gray-500 border border-gray-800 min-h-[70px] flex items-center';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.classList.remove('opacity-75');
+        btnText.textContent = 'Send GET /hello';
+        simStatus.textContent = '200 OK (Success)';
+        simStatus.className = 'text-emerald-400 font-semibold';
+        resTime.textContent = '145ms';
+        responseBox.textContent = 'Hello from Spring Boot!';
+        responseBox.className = 'bg-gray-900 p-4 rounded-lg text-sm font-mono text-spring-400 font-bold border border-spring-500/30 min-h-[70px] flex items-center transition-all';
+      }, 400);
+    }
+  </script>
+</body>
+</html>
