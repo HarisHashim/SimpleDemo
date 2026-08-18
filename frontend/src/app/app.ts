@@ -11,19 +11,20 @@ import { CommonModule } from '@angular/common';
 })
 export class App implements OnInit {
   protected readonly title = signal('frontend');
-  message: string = '';
+  protected readonly message = signal<string>('');
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.apiService.getHelloMessage().subscribe({
       next: (data) => {
-        this.message = data;
+        this.message.set(data);
       },
       error: (error) => {
         console.error('Error fetching message:', error);
-        this.message = 'Error fetching message from backend.';
+        this.message.set('Error fetching message from backend.');
       }
     });
   }
 }
+

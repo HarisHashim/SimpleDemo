@@ -1,4 +1,8 @@
 <h1>{{ title() }}</h1>
 
-<p *ngIf="message">Message from backend: {{ message }}</p>
-<p *ngIf="!message">Loading message from backend...</p>
+@if (message()) {
+  <p>Message from backend: {{ message() }}</p>
+} @else {
+  <p>Loading message from backend...</p>
+}
+
