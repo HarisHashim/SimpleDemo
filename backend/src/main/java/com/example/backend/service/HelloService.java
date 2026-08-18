@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.model.Message;
 import com.example.backend.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class HelloService {
     }
 
     public String getGreeting() {
-        return messageRepository.getMessage();
+        return messageRepository.findTopByOrderByIdDesc()
+                .map(Message::getText)
+                .orElse("No message found in MySQL database.");
     }
 }
+
